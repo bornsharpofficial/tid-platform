@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisconsin TID Investment Platform</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2a;--navy-mid:#1a2b3c;--navy-light:#243b55;
+  --gold:#c9a84c;--gold-dim:#8c6e2e;
+  --white:#ffffff;--off:#f0f2f5;
+  --mist:#8a9bab;--slate:#4a6580;
+  --border:#2a3f54;
+  --text:#f0ede8;--text-sec:#a8b8c8;
+}
+html,body{height:100%;background:var(--navy)}
+body{font-family:'Segoe UI',system-ui,sans-serif;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── HEADER ── */
+header{
+  padding:32px 48px 28px;
+  border-bottom:1px solid rgba(201,168,76,.15);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.logo-wrap{display:flex;align-items:center;gap:14px}
+.logo-bar{width:3px;height:44px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.logo-text h1{font-size:22px;font-weight:600;color:var(--white);letter-spacing:.01em;line-height:1.2}
+.logo-text p{font-size:12px;color:var(--mist);margin-top:3px}
+.header-meta{font-size:11px;color:var(--slate);text-align:right;line-height:1.6}
+
+/* ── MAIN ── */
+main{flex:1;padding:48px;max-width:1000px;margin:0 auto;width:100%}
+
+/* ── TOOL CARDS ── */
+.tools-section{margin-bottom:52px}
+.section-label{
+  font-size:10px;font-weight:600;color:var(--gold);
+  letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:20px;padding-bottom:10px;
+  border-bottom:1px solid rgba(201,168,76,.2);
+}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+
+.tool-card{
+  background:var(--navy-mid);
+  border:0.5px solid var(--border);
+  border-radius:12px;
+  padding:28px;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s, background .2s;
+  cursor:pointer;
+}
+.tool-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);opacity:0;transition:opacity .2s;
+}
+.tool-card:hover{background:var(--navy-light);border-color:rgba(201,168,76,.4)}
+.tool-card:hover::before{opacity:1}
+
+.tool-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.tool-icon.map-icon{background:rgba(29,158,117,.12)}
+.tool-icon.tracker-icon{background:rgba(56,138,221,.12)}
+
+.tool-name{font-size:17px;font-weight:600;color:var(--white)}
+.tool-desc{font-size:13px;color:var(--mist);line-height:1.55;flex:1}
+
+.tool-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid var(--border);
+}
+.tool-badge{
+  font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;
+}
+.badge-live{background:rgba(29,158,117,.15);color:#74c69d}
+.badge-interactive{background:rgba(56,138,221,.12);color:#85b7eb}
+.tool-arrow{font-size:16px;color:var(--gold);transition:transform .2s}
+.tool-card:hover .tool-arrow{transform:translateX(4px)}
+
+/* ── STATS ROW ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;margin-bottom:52px;
+}
+.stat-card{
+  background:var(--navy-mid);border:0.5px solid var(--border);
+  border-radius:8px;padding:16px;text-align:center;
+}
+.stat-num{font-size:26px;font-weight:600;color:var(--white)}
+.stat-num.gold{color:var(--gold)}
+.stat-lbl{font-size:11px;color:var(--mist);margin-top:4px}
+
+/* ── WORKFLOW ── */
+.workflow-section{margin-bottom:52px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  font-size:11px;font-weight:700;color:var(--gold);
+  min-width:28px;padding-top:1px;
+}
+.step-title{font-size:13px;font-weight:600;color:var(--white);min-width:160px}
+.step-desc{font-size:12px;color:var(--mist);line-height:1.55}
+
+/* ── RESOURCES ── */
+.resources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.resource-link{
+  background:var(--navy-mid);border:0.5px solid var(--border);
+  border-radius:8px;padding:14px 16px;
+  text-decoration:none;display:flex;flex-direction:column;gap:4px;
+  transition:border-color .15s;
+}
+.resource-link:hover{border-color:rgba(201,168,76,.4)}
+.resource-name{font-size:12px;font-weight:600;color:var(--text)}
+.resource-sub{font-size:11px;color:var(--mist)}
+
+/* ── FOOTER ── */
+footer{
+  padding:20px 48px;
+  border-top:1px solid rgba(201,168,76,.1);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.footer-left{font-size:11px;color:var(--slate)}
+.footer-right{font-size:11px;color:var(--slate)}
+
+/* ── CONNECT MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:900;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--navy-mid);border:0.5px solid rgba(201,168,76,.3);border-radius:12px;padding:28px;width:460px;max-width:92vw}
+.modal-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px}
+.modal-sub{font-size:12px;color:var(--mist);margin-bottom:20px;line-height:1.55}
+.url-row{display:flex;gap:8px;margin-bottom:14px}
+.url-input{
+  flex:1;padding:9px 12px;
+  background:var(--navy);border:1px solid var(--border);
+  border-radius:6px;font-size:12px;color:var(--white);outline:none;
+}
+.url-input:focus{border-color:rgba(201,168,76,.5)}
+.url-input::placeholder{color:var(--slate)}
+.connect-btn{
+  padding:0 16px;background:var(--gold);color:#fff;
+  border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;
+  white-space:nowrap;
+}
+.connect-btn:disabled{opacity:.5;cursor:default}
+.modal-note{font-size:11px;color:var(--slate);line-height:1.5}
+.modal-skip{font-size:11px;color:var(--mist);text-align:center;margin-top:14px;cursor:pointer;text-decoration:underline}
+.modal-close{float:right;background:none;border:none;color:var(--mist);font-size:20px;cursor:pointer;margin:-4px -4px 0 0}
+
+.global-nav{background:#0d1b2a;height:48px;display:flex;align-items:center;padding:0 24px;gap:0;border-bottom:1px solid rgba(201,168,76,.2);flex-shrink:0;position:sticky;top:0;z-index:500;}
+.nav-logo{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;margin-right:24px;text-decoration:none;}
+.nav-logo span{color:#c9a84c}
+.nav-links{display:flex;gap:2px;flex:1}
+.nav-link{height:36px;padding:0 16px;background:transparent;color:#6b8aaa;border:none;cursor:pointer;font-size:13px;border-bottom:2px solid transparent;transition:.12s;text-decoration:none;display:flex;align-items:center;white-space:nowrap;}
+.nav-link:hover{color:#fff}
+.nav-link.active{color:#c9a84c;border-bottom-color:#c9a84c}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nav-sync{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(201,168,76,.15);color:#c9a84c;border:1px solid rgba(201,168,76,.3);cursor:pointer;white-space:nowrap;}
+.nav-sync.syncing{background:rgba(56,138,221,.2);color:#85b7eb;border-color:rgba(56,138,221,.3)}
+.nav-sync.error{background:rgba(220,38,38,.15);color:#f87171;border-color:rgba(220,38,38,.3)}
+.nav-sync.saved{background:rgba(29,158,117,.15);color:#74c69d;border-color:rgba(29,158,117,.3)}
+
+</style>
+</head>
+<body>
+<nav class="global-nav"><a class="nav-logo" href="index.html">TID <span>Platform</span></a><div class="nav-links"><a class="nav-link active" href="index.html">&#127968; Home</a><a class="nav-link" href="WI_TID_Interactive_Map.html">&#127758; TID Map</a><a class="nav-link" href="TID_Project_Tracker_v2.html">&#128196; Project Tracker</a></div></nav>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-bar"></div>
+    <div class="logo-text">
+      <h1>Wisconsin TID Investment Platform</h1>
+      <p>Tax Incremental District research, mapping &amp; deal tracking</p>
+    </div>
+  </div>
+  <div class="header-meta">
+    Source: Wisconsin DOR &nbsp;·&nbsp; 2025 Active TIDs<br>
+    Updated April 23, 2026
+  </div>
+</header>
+
+<main>
+
+  <!-- TOOLS -->
+  <div class="tools-section">
+    <div class="section-label">Platform Tools</div>
+    <div class="tools-grid">
+
+      <a class="tool-card" href="./WI_TID_Interactive_Map.html">
+        <div class="tool-icon map-icon">&#127758;</div>
+        <div>
+          <div class="tool-name">TID Interactive Map</div>
+          <div class="tool-desc">All 1,445 active Wisconsin TIDs plotted on an interactive map. Filter by status, type, and county. Click any district for details and direct links to LoopNet, PropWire, Zillow, and county records.</div>
+        </div>
+        <div class="tool-footer">
+          <span class="tool-badge badge-interactive">Interactive map</span>
+          <span class="tool-arrow">&#8594;</span>
+        </div>
+      </a>
+
+      <div class="tool-card" onclick="openTracker()">
+        <div class="tool-icon tracker-icon">&#128196;</div>
+        <div>
+          <div class="tool-name">Project Tracker</div>
+          <div class="tool-desc">Smartsheet-style deal pipeline with inline editing, status tracking, pipeline analytics, and team management. Syncs live with the shared Google Sheet — all changes visible to your entire team instantly.</div>
+        </div>
+        <div class="tool-footer">
+          <span class="tool-badge badge-live" id="connection-badge">Not connected</span>
+          <span class="tool-arrow">&#8594;</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="tools-section">
+    <div class="section-label">Database Overview</div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num gold">1,445</div><div class="stat-lbl">Active TIDs</div></div>
+      <div class="stat-card"><div class="stat-num">1,290</div><div class="stat-lbl">Active districts</div></div>
+      <div class="stat-card"><div class="stat-num">110</div><div class="stat-lbl">Expiring ≤ 3 years</div></div>
+      <div class="stat-card"><div class="stat-num">415</div><div class="stat-lbl">Municipalities</div></div>
+      <div class="stat-card"><div class="stat-num">70</div><div class="stat-lbl">Counties</div></div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="workflow-section">
+    <div class="section-label">Investment Workflow</div>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><span class="step-title">Identify parcels</span><span class="step-desc">WI SCO Parcel Map → download county shapefile → overlay TID boundary to extract every parcel within the district</span></div>
+      <div class="step"><span class="step-num">02</span><span class="step-title">Build owner list</span><span class="step-desc">PropWire → search by TID city/zip → filter absentee owners, vacant properties, high equity → export CSV at no cost</span></div>
+      <div class="step"><span class="step-num">03</span><span class="step-title">Source listings</span><span class="step-desc">LoopNet for commercial &amp; industrial · Zillow for residential · LandWatch for vacant land · cross-reference by municipality</span></div>
+      <div class="step"><span class="step-num">04</span><span class="step-title">Resolve entities</span><span class="step-desc">WI DFI Business Search → identify the decision-maker behind LLCs and trusts holding commercial TID parcels</span></div>
+      <div class="step"><span class="step-num">05</span><span class="step-title">Get contacts</span><span class="step-desc">BatchSkipTracing.com → upload owner CSV → retrieve verified phone &amp; email → $0.10 per record, no subscription</span></div>
+      <div class="step"><span class="step-num">06</span><span class="step-title">Log &amp; investigate</span><span class="step-desc">Check the Investigate box in Project Tracker or TID Database → auto-flags on map · adds to Flagged TIDs · syncs to team</span></div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="tools-section">
+    <div class="section-label">External Resources</div>
+    <div class="resources-grid">
+      <a class="resource-link" href="https://www.loopnet.com" target="_blank"><span class="resource-name">LoopNet</span><span class="resource-sub">Commercial listings</span></a>
+      <a class="resource-link" href="https://propwire.com" target="_blank"><span class="resource-name">PropWire</span><span class="resource-sub">Free owner data</span></a>
+      <a class="resource-link" href="https://www.zillow.com/homes/Wisconsin/" target="_blank"><span class="resource-name">Zillow</span><span class="resource-sub">Residential listings</span></a>
+      <a class="resource-link" href="https://www.landwatch.com/wisconsin-land-for-sale" target="_blank"><span class="resource-name">LandWatch</span><span class="resource-sub">Vacant land</span></a>
+      <a class="resource-link" href="https://publicrecords.netronline.com/state/WI" target="_blank"><span class="resource-name">WI County Records</span><span class="resource-sub">All 70 counties</span></a>
+      <a class="resource-link" href="https://www.wdfi.org/apps/CorpSearch/Search.aspx" target="_blank"><span class="resource-name">WI DFI Search</span><span class="resource-sub">LLC resolution</span></a>
+      <a class="resource-link" href="https://maps.sco.wisc.edu/Parcels/" target="_blank"><span class="resource-name">WI SCO Parcels</span><span class="resource-sub">Statewide parcel map</span></a>
+      <a class="resource-link" href="https://www.batchskiptracing.com" target="_blank"><span class="resource-name">BatchSkipTracing</span><span class="resource-sub">Owner contacts</span></a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-left">Wisconsin TID Investment Platform &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; April 23, 2026</div>
+  <div class="footer-right">Data: Wisconsin Department of Revenue &nbsp;·&nbsp; 1,445 Active TIDs</div>
+</footer>
+
+<!-- CONNECT MODAL -->
+<div class="modal-bg" id="modal-connect">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeConnect()">&times;</button>
+    <div class="modal-title">Connect Project Tracker to Google Sheets</div>
+    <div class="modal-sub">Enter your Google Apps Script Web App URL to sync project data across your team in real time.</div>
+    <div class="url-row">
+      <input class="url-input" id="webapp-url-input" placeholder="https://script.google.com/macros/s/..." oninput="validateUrl(this.value)">
+      <button class="connect-btn" id="connect-btn" onclick="saveAndOpen()" disabled>Connect</button>
+    </div>
+    <div class="modal-note">
+      Don't have a URL yet? Open the Project Tracker file directly and follow the setup instructions inside.<br>
+      Your URL is saved in this browser — you only need to enter it once.
+    </div>
+    <div class="modal-skip" onclick="openTrackerDirect()">Skip — open tracker without Google Sheets connection</div>
+  </div>
+</div>
+
+<script>
+var WEBAPP_KEY = 'tid_webapp_url';
+var webappUrl  = localStorage.getItem(WEBAPP_KEY) || '';
+
+// Update badge on load
+(function() {
+  var badge = document.getElementById('connection-badge');
+  if (webappUrl) {
+    badge.textContent = 'Connected';
+    badge.style.background = 'rgba(29,158,117,.15)';
+    badge.style.color = '#74c69d';
+  }
+})();
+
+function openTracker() {
+  if (webappUrl) {
+    window.location.href = './TID_Project_Tracker_v2.html';
+  } else {
+    document.getElementById('modal-connect').classList.add('open');
+    setTimeout(function(){ document.getElementById('webapp-url-input').focus(); }, 100);
+  }
+}
+
+function validateUrl(val) {
+  document.getElementById('connect-btn').disabled = !val.includes('script.google.com');
+}
+
+function saveAndOpen() {
+  var url = document.getElementById('webapp-url-input').value.trim();
+  if (!url) return;
+  localStorage.setItem(WEBAPP_KEY, url);
+  webappUrl = url;
+  closeConnect();
+  window.location.href = './TID_Project_Tracker_v2.html';
+}
+
+function openTrackerDirect() {
+  closeConnect();
+  window.location.href = './TID_Project_Tracker_v2.html';
+}
+
+function closeConnect() {
+  document.getElementById('modal-connect').classList.remove('open');
+}
+
+document.getElementById('modal-connect').addEventListener('click', function(e) {
+  if (e.target === this) closeConnect();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeConnect();
+});
+
+// Share the stored URL with the tracker page via localStorage
+// (tracker already reads tid_webapp_url from localStorage)
+</script>
+</body>
+</html>
